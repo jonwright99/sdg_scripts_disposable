@@ -65,7 +65,9 @@ def get_1to1_connections(NODE_SIZE=500,MAX_KCI=1.5,WIN_PERC=.75,WIN_MIN=10):
                 n=mc[0]
                 mc2=Counter([x.node().node_id() for x in mldg_specific.get_nodeview(n).prev()]).most_common(1)[0]
                 #print("mc2=%d"%mc2)
-                if mc2[0]==nv.node_id() and mc2[1]>=WIN_MIN and mc2[1]/len(nv.next())>=WIN_PERC:
+                # JW fix below
+                #if mc2[0]==nv.node_id() and mc2[1]>=WIN_MIN and mc2[1]/len(nv.next())>=WIN_PERC:
+                if mc2[0]==nv.node_id() and mc2[1]>=WIN_MIN and mc2[1]/len(mldg_specific.get_nodeview(n).prev())>=WIN_PERC:
                     conn_ends.add((min(-nv.node_id(),n),max(-nv.node_id(),n)))
 
     print(len(conn_ends),"connections detected between",len(hs_nodes),"long unique nodes")
